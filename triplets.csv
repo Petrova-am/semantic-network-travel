@@ -1,0 +1,41 @@
+subject,relation,object,source
+cls_beach_country,подкласс,cls_country,K-06
+cls_cultural_country,подкласс,cls_country,K-09
+cls_exotic_country,подкласс,cls_country,K-13
+inst_turkey,экземпляр,cls_beach_country,K-11
+inst_china,экземпляр,cls_cultural_country,K-12
+inst_vietnam,экземпляр,cls_exotic_country,K-13
+inst_egypt,экземпляр,cls_beach_country,K-14
+inst_thailand,экземпляр,cls_beach_country,K-15
+inst_turkey,требует визу,inst_visa_free,K-01
+inst_china,требует визу,inst_visa_free,K-02
+inst_vietnam,требует визу,inst_visa_free,K-03
+inst_egypt,требует визу,inst_visa_on_arrival,K-04
+inst_thailand,требует визу,inst_visa_free,K-05
+inst_turkey,лучший сезон,inst_spring,K-06
+inst_turkey,лучший сезон,inst_autumn,K-06
+inst_egypt,лучший сезон,inst_spring,K-07
+inst_egypt,лучший сезон,inst_autumn,K-07
+inst_vietnam,лучший сезон,inst_spring,K-08
+inst_vietnam,лучший сезон,inst_autumn,K-08
+inst_china,лучший сезон,inst_spring,K-09
+inst_china,лучший сезон,inst_autumn,K-09
+inst_thailand,лучший сезон,inst_winter,K-10
+inst_thailand,лучший сезон,inst_spring,K-10
+inst_turkey,подходит для,inst_beach,K-11
+inst_turkey,подходит для,inst_culture,K-11
+inst_egypt,подходит для,inst_beach,K-14
+inst_egypt,подходит для,inst_culture,K-14
+inst_vietnam,подходит для,inst_exotic,K-13
+inst_vietnam,подходит для,inst_beach,K-13
+inst_china,подходит для,inst_culture,K-12
+inst_china,подходит для,inst_nature,K-12
+inst_thailand,подходит для,inst_beach,K-15
+inst_thailand,подходит для,inst_culture,K-15
+inst_turkey,имеет прямой рейс,inst_direct_flight,K-16
+inst_china,имеет прямой рейс,inst_direct_flight,K-16
+inst_vietnam,имеет прямой рейс,inst_direct_flight,K-16
+inst_egypt,имеет прямой рейс,inst_direct_flight,K-16
+inst_thailand,имеет прямой рейс,inst_direct_flight,K-16
+inst_visa_free,длительность визы,val_days_60,K-01
+inst_visa_free,длительность визы,val_days_30,K-02
