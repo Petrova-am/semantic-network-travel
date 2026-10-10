@@ -92,13 +92,35 @@ class SemanticNetwork:
 
     def classify_country(self, country):
         interests = [obj for rel, obj in self.neighbors(country, "подходит для")]
+        country_name = self.nodes[country]["name"]
+
         if "inst_beach" in interests:
-            return "Пляжная страна"
+            return {
+                "class": "Пляжная страна",
+                "rule": "ЕСЛИ страна подходит для пляжа, ТО она — Пляжная страна",
+                "reason": f"{country_name} имеет связь 'подходит для' → Пляж (K-11, K-13, K-14, K-15)",
+                "facts": [f"{country_name} — подходит для → Пляж"],
+            }
         if "inst_culture" in interests:
-            return "Культурная страна"
+            return {
+                "class": "Культурная страна",
+                "rule": "ЕСЛИ страна подходит для культуры, ТО она — Культурная страна",
+                "reason": f"{country_name} имеет связь 'подходит для' → Культура (K-11, K-12, K-14, K-15)",
+                "facts": [f"{country_name} — подходит для → Культура"],
+            }
         if "inst_exotic" in interests:
-            return "Экзотическая страна"
-        return "Не классифицирована"
+            return {
+                "class": "Экзотическая страна",
+                "rule": "ЕСЛИ страна подходит для экзотики, ТО она — Экзотическая страна",
+                "reason": f"{country_name} имеет связь 'подходит для' → Экзотика (K-13)",
+                "facts": [f"{country_name} — подходит для → Экзотика"],
+            }
+        return {
+            "class": "Не классифицирована",
+            "rule": "Нет связей 'подходит для'",
+            "reason": f"У {country_name} нет связей 'подходит для' ни с одним интересом",
+            "facts": [],
+        }
 
 
 def load_data(nodes_file, triplets_file):
@@ -109,3 +131,4 @@ def load_data(nodes_file, triplets_file):
         for row in reader:
             triplets.append(row)
     return nodes, triplets
+

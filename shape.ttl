@@ -1,0 +1,11 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix ex: <http://example.org/> .
+
+ex:CountryShape
+    a sh:NodeShape ;
+    sh:targetClass ex:cls_beach_country ;
+    sh:property [
+        sh:path ex:подходит_для ;
+        sh:minCount 1 ;
+        sh:message "Пляжная страна должна подходить хотя бы для одного интереса" ;
+    ] .

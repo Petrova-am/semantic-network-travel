@@ -1,7 +1,9 @@
 # main.py
 from nodes import nodes
 from network import SemanticNetwork, load_data
-from render import render_graph
+from render import render_graph_with_path
+from pyshacl import validate
+from rdflib import Graph
 
 
 def main():
@@ -57,7 +59,56 @@ def main():
 
     print("\nКласификация стран")
     for c in ["inst_turkey", "inst_china", "inst_vietnam", "inst_egypt", "inst_thailand"]:
-        print(f"  {nodes_data[c]['name']}: {net.classify_country(c)}")
+        result = net.classify_country(c)
+        print(f"\n  Страна: {nodes_data[c]['name']}")
+        print(f"  Класс: {result['class']}")
+        print(f"  Правило: {result['rule']}")
+        print(f"  Объяснение: {result['reason']}")
+        for fact in result["facts"]:
+            print(f"    • {fact}")
+
+    render_graph_with_path(net, "inst_egypt", "inst_beach")
+
+
+    #запрос SPARQL
+    g = Graph()
+    g.parse("network.ttl", format="turtle")
+
+    query = """
+    PREFIX ex: <http://example.org/>
+    SELECT ?country WHERE {
+        ?country ex:подходит_для ex:inst_beach .
+    }
+    """
+
+    print("Вопрос: какие страны подходят для пляжа?")
+    print()
+
+    names = {
+        "inst_turkey": "Турция",
+        "inst_china": "Китай",
+        "inst_vietnam": "Вьетнам",
+        "inst_egypt": "Египет",
+        "inst_thailand": "Таиланд",
+        "inst_beach": "Пляж",
+        "inst_culture": "Культура",
+        "inst_nature": "Природа",
+        "inst_exotic": "Экзотика",
+    }
+
+    #запрос SPARQL
+    results = g.query(query)
+    for row in results:
+        uri = str(row[0])
+        short_id = uri.split("/")[-1]
+        name = names.get(short_id, short_id)
+        print(f"  {name} ({short_id})")
+
+    # проверка SHACL
+    data = Graph().parse("network.ttl", format="turtle")
+    shapes = Graph().parse("shape.ttl", format="turtle")
+    conforms, _, text = validate(data, shacl_graph=shapes)
+    print(f"\nСоответствует: {conforms}")
 
 if __name__ == "__main__":
     main()
